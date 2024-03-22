@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>لعبة إبداع الشعر</title>
+</head>
+<body>
+ <h1>لعبة إبداع الشعر</h1>
+ <p id="poem">هل بالطلول لسائل رد...ام هل لها بتكلم عهد</p>
+ <input type="text" id="answer" placeholder="اكتب بيت شعر جديد يبدأ بآخر كلمة من البيت المعروض">
+ <button onclick="submitAnswer()">إرسال</button>
+ <p id="score">النقاط: 0</p>
+ <div id="message"></div>
+
+ <script>
+  const poems = [
+   "هل بالطلول لسائل رد...ام هل لها بتكلم عهد",
+   "آذنتنا ببينها أسماء رب ثاو يمل من الثواء",
+   // ... المزيد من الأبيات
+   "وإذا صحوت فإنني رب الشويهة والبعير",
+   "إن كنت عاذلتي فسيري نحو العرق ولا تحوري",
+   "لا تسألي عن جل ما لي وانظري كرمي وخيري",
+   // ... المزيد من الأبيات الجديدة
+  ];
+
+  let currentPoemIndex = 0;
+
+  function displayMessage(message) {
+   const messageElement = document.getElementById("message");
+   messageElement.innerHTML = message;
+   messageElement.classList.add("visible");
+
+   setTimeout(() => {
+    messageElement.classList.remove("visible");
+   }, 2000);
+  }
+
+  function submitAnswer() {
+   const answer = document.getElementById("answer").value;
+   const lastWord = document.getElementById("poem").innerHTML.split(" ").pop();
+
+   if (answer.startsWith(lastWord)) {
+    // إجابة صحيحة
+    displayMessage("مليووون نقطة!");
+
+    // عرض البيت التالي
+    currentPoemIndex++;
+    if (currentPoemIndex < poems.length) {
+     document.getElementById("poem").innerHTML = poems[currentPoemIndex];
+    } else {
+     // لا يوجد المزيد من الأبيات
+     displayMessage("لقد انتهت اللعبة!");
+    }
+   } else {
+    // إجابة خاطئة
+    displayMessage("يبدو انني من سيسبك");
+   }
+
+   // تنظيف حقل الإدخال
+   document.getElementById("answer").value = "";
+  }
+ </script>
+
+ <style>
+  /* تنسيق الصفحة بشكل عام */
+
+  body {
+   font-family: sans-serif;
+   font-size: 16px;
+   margin: 20px;
+  }
+
+  /* تنسيق عنوان اللعبة */
+
+  h1 {
+   text-align: center;
+  }
+
+  /* تنسيق البيت المعروض */
+
+  #poem {
+   font-size: 18px;
+   font-weight: bold;
+   margin-bottom: 10px;
+  }
+
+  /* تنسيق حقل الإدخال */
+
+  #answer {
+   width: 75%;
+   padding: 10px;
+   font-size: 16px;
+
+   /* إضافة نمط تركيز */
+   &:focus {
+    outline: 2px solid #000;
+   }
+  }
+
+  /* تنسيق زر الإرسال */
+
+  #submit {
+   background-color: #008000;
+   color: #fff;
+   width: 100px;
+   height: 40px;
+   font-size: 18px;
+  }
+
+  /* تنسيق النقاط */
+
+  #score {
+   margin-top: 10px;
+   font-weight: bold;
+  }
+
+  /* تنسيق الرسائل */
+
+  #message {
+   color: #000;
+   background-color: #fff;
+   border: 2px solid #000;
+   font-size: 18px;
+   margin-top: 10px;
+   padding: 10px;
+   border-radius: 5px;
+   display: none;
+  }
+
+  /* تنسيق الرسائل المرئية */
+
+  #message.visible {
+   display: block;
+  
